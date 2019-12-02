@@ -1,4 +1,4 @@
-const { isNumber, isString, isBoolean, castToNumber, getCaster } = require('../lib/types.js');
+const { isNumber, isString, isBoolean, isArray, castToNumber, getCaster } = require('../lib/types.js');
 
 describe('validator module', () => {
     describe('basic validation', () => {
@@ -30,14 +30,26 @@ describe('validator module', () => {
         it('should tell if a value is a boolean', () => {
             expect(isBoolean(true)).toBeTruthy();
             expect(isBoolean(false)).toBeTruthy();
-            expect(isBoolean('polaroid')).toBeFalsy;
-            expect(isBoolean(3987)).toBeFalsy;
-            expect(isBoolean(null)).toBeFalsy;
-            expect(isBoolean(NaN)).toBeFalsy;
-            expect(isBoolean(undefined)).toBeFalsy;
-            expect(isBoolean([])).toBeFalsy;
-            expect(isBoolean({})).toBeFalsy;
-            expect(isBoolean(() => {})).toBeFalsy;
+            expect(isBoolean('polaroid')).toBeFalsy();
+            expect(isBoolean(3987)).toBeFalsy();
+            expect(isBoolean(null)).toBeFalsy();
+            expect(isBoolean(NaN)).toBeFalsy();
+            expect(isBoolean(undefined)).toBeFalsy();
+            expect(isBoolean([])).toBeFalsy();
+            expect(isBoolean({})).toBeFalsy();
+            expect(isBoolean(() => {})).toBeFalsy();
+        });
+
+        it('should tell if a value is an array', () => {
+            expect(isArray([])).toBeTruthy();
+            expect(isArray([1, 'red', null])).toBeTruthy();
+            expect(isArray('platypus')).toBeFalsy();
+            expect(isArray(100000)).toBeFalsy();
+            expect(isArray(NaN)).toBeFalsy();
+            expect(isArray(undefined)).toBeFalsy();
+            expect(isArray(null)).toBeFalsy();
+            expect(isArray({})).toBeFalsy();
+            expect(isArray(() => {})).toBeFalsy();
         });
     });
 
