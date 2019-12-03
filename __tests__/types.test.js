@@ -1,4 +1,16 @@
-const { isNumber, isString, isBoolean, isArray, isObject, isFunction, castToNumber, castToString, castToBoolean, getCaster } = require('../lib/types.js');
+const {
+    isNumber,
+    isString,
+    isBoolean,
+    isArray,
+    isObject,
+    isFunction,
+    castToNumber,
+    castToString,
+    castToBoolean,
+    castToArray,
+    getCaster
+} = require('../lib/types.js');
 
 describe('validator module', () => {
     describe('basic validation', () => {
@@ -122,10 +134,18 @@ describe('validator module', () => {
             expect(castToBoolean(NaN)).toEqual(false);
             expect(castToBoolean(0)).toEqual(false);
         });
+
+        it('can cast values to an array', () => {
+            expect(castToArray('tree', 8923, null, undefined, NaN, [], {})).toEqual(['tree', 8923, null, undefined, NaN, [], {}]);
+            expect(castToArray()).toEqual([]);
+            expect(castToArray(98769876)).toEqual([98769876]);
+            expect(castToArray('bush', 98)).toEqual(['bush', 98]);
+        });
     });
 
     it('can get the right caster', () => {
         expect(getCaster(Number)).toEqual(castToNumber);
+        expect(getCaster(String)).toEqual(castToString);
         expect(getCaster(Promise)).toBeNull();
     });
 });
