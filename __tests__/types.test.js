@@ -1,4 +1,4 @@
-const { isNumber, isString, isBoolean, isArray, isObject, isFunction, castToNumber, getCaster } = require('../lib/types.js');
+const { isNumber, isString, isBoolean, isArray, isObject, isFunction, castToNumber, castToString, getCaster } = require('../lib/types.js');
 
 describe('validator module', () => {
     describe('basic validation', () => {
@@ -92,6 +92,21 @@ describe('validator module', () => {
         it('throws if value is not castable to number', () => {
             expect(() => castToNumber('hi')).toThrowErrorMatchingSnapshot();
             expect(() => castToNumber({})).toThrowErrorMatchingSnapshot();
+        });
+
+        it('can cast values to a string', () => {
+            expect(castToString('cucumber')).toEqual('cucumber');
+            expect(castToString(667567)).toEqual('667567');
+            expect(castToString([12, 'frog', 'plop'])).toEqual('12,frog,plop');
+            expect(castToString({})).toEqual('{}');
+            expect(castToString(NaN)).toEqual('NaN');
+            expect(castToString(true)).toEqual('true');
+            expect(castToString(false)).toEqual('false');
+        });
+
+        it('throws if value is not castable to string', () => {
+            expect(() => castToString(undefined)).toThrowErrorMatchingSnapshot();
+            expect(() => castToString(null)).toThrowErrorMatchingSnapshot();
         });
     });
 
